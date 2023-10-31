@@ -3,17 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@redux-saga/core": "^1.2.3",
+    "@reduxjs/toolkit": "^1.2.5",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.5.0",
+    "babel-loader": "^9.1.3",
+    "babel-preset-react": "^6.24.1",
+    "copy-webpack-plugin": "^11.0.0",
+    "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "node-sass": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.1.3",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "redux": "^4.2.1",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^1.2.3",
+    "redux-thunk": "^2.4.2",
+    "scichart": "^3.2.446",
+    "scichart-example-dependencies": "^0.1.7",
+    "style-loader": "^3.3.3",
+    "styled-components": "^6.0.7",
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.88.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack",
+    "start": "webpack-dev-server",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -34,5 +54,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "webpack-cli": "^5.1.4"
   }
 }
