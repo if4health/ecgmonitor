@@ -48,6 +48,7 @@ module.exports = {
                 errors: true,
             },
         },
-        https: true
+        https: true,
+        disableHostCheck: true
     },
 };
