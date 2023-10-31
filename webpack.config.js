@@ -48,7 +48,6 @@ module.exports = {
                 errors: true,
             },
         },
-        https: true,
         allowedHosts: "all",
     },
 };
