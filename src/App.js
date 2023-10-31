@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import axios, {AxiosResponse} from 'axios';
 import Avr from "./components/avr";
 import {ContainerSelect, IbRow2Col2, Label, Select} from "./styles";
-import heart from "../../../../Desktop/Projetos/ecgmonitor/src/heart.png"
 import {useDispatch, useSelector} from "react-redux";
 import {monitorActions} from "./saga/reducers";
 
@@ -49,9 +48,6 @@ export default function App() {
                     }
                 </Select>
             </ContainerSelect>
-            <IbRow2Col2>
-                <img  src={heart} height="100" />
-            </IbRow2Col2>
         </div> : <></>
 
 
