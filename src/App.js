@@ -31,9 +31,9 @@ export default function App() {
                     isSomeOneOpened={statePosition?.includes('chart')}
                     setStatePosition={setStatePosition} openState={openState}
                     currentPoint={0} chartElementId={`${selectedEcgType?.code}`}
-                    step={15}
-                    timerTimeoutMs={selectedEcgType?.period * 15}
-                    strokeThickness={4}
+                    step={10}
+                    timerTimeoutMs={selectedEcgType?.period * 10}
+                    strokeThickness={5}
                     gapPoints={20}
                     pointsLoop={2000}/>}
             </div>

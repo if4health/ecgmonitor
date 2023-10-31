@@ -39,7 +39,7 @@ const drawExample = async (
     // Create multiple y-axis, one per trace. Using the stacked vertically layout strategy
     const yAxisHeartRate = new NumericAxis(wasmContext, {
         id: `yHeartRate-${chartElementId}`,
-        visibleRange: new NumberRange(800, 1300),
+        visibleRange: new NumberRange(500, 1800),
         isVisible: false
     });
 
@@ -139,7 +139,7 @@ const Avr = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, 
         setOpenScreen(update.split(" "))
         setTestInterval(setInterval(() => {
             dispatch(monitorActions.setNewValues({ typeCode: chartElementId, time: newTimer }))
-        }, 40000));
+        }, 50000));
         return () => {
             dispatch(monitorActions.resetNewValues())
             clearInterval(testInterval);
