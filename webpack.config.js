@@ -49,6 +49,6 @@ module.exports = {
             },
         },
         https: true,
-        disableHostCheck: true
+        allowedHosts: "all",
     },
 };
