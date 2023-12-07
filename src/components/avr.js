@@ -23,7 +23,10 @@ const drawExample = async (
     strokeThickness,
     gapPoints,
     pointsLoop,
-    currentPoint
+    currentPoint,
+    bpmValues,
+    dispatch,
+    bpmState
 ) => {
     const { sciChartSurface, wasmContext } = await SciChartSurface.create(chartElementId);
     const xAxis = new CategoryAxis(wasmContext, {
@@ -39,7 +42,7 @@ const drawExample = async (
     // Create multiple y-axis, one per trace. Using the stacked vertically layout strategy
     const yAxisHeartRate = new NumericAxis(wasmContext, {
         id: `yHeartRate-${chartElementId}`,
-        visibleRange: new NumberRange(500, 1800),
+        visibleRange: new NumberRange(-600, 600),
         isVisible: false
     });
 
@@ -72,11 +75,14 @@ const drawExample = async (
 
     let timerId;
 
-    const runUpdateDataOnTimeout = (newData) => {
+    const runUpdateDataOnTimeout = (newData, concatBpm, dispatch) => {
         const { xArr, ecgHeartRateArr } = getValuesFromData(
             currentPoint,
             newData,
-            step
+            step,
+            concatBpm,
+            dispatch,
+            bpmState
         );
 
         currentPoint += step;
@@ -84,7 +90,7 @@ const drawExample = async (
         if (ecgHeartRateArr.includes(NaN)) {
             handleStop();
         } else {
-            timerId = setTimeout(() => runUpdateDataOnTimeout(newData), timerTimeoutMs);
+            timerId = setTimeout(() => runUpdateDataOnTimeout(newData, concatBpm, dispatch, bpmState), timerTimeoutMs);
         }
     };
 
@@ -96,12 +102,16 @@ const drawExample = async (
         timerId = undefined;
     };
 
-    const handleStart = (newData) => {
+    const handleStart = (newData, bpm) => {
         let concatData = ecgHeartRateValues
+        let concatBpm = bpmValues
         if (newData) {
             concatData = [...ecgHeartRateValues, ...newData]
         }
-        runUpdateDataOnTimeout(concatData);
+        if (bpm) {
+            concatBpm = [...bpm, ...newData]
+        }
+        runUpdateDataOnTimeout(concatData, concatBpm, dispatch);
     };
 
     return { sciChartSurface, wasmContext, controls: { handleStart, handleStop }, dataSeries1 };
@@ -110,11 +120,12 @@ const drawExample = async (
 
 
 
-const Avr = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, pointsLoop, currentPoint, openState, setStatePosition, isSomeOneOpened, update} ) => {
+const Avr = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, pointsLoop, currentPoint, openState, setStatePosition, isSomeOneOpened, update, bpmState} ) => {
     const sciChartSurfaceRef = useRef();
     const [contextControls, setContextControls] = useState()
     const newValues = useSelector(state => state.newValues)
     const newTimer = useSelector(state => state.newTimer)
+    const bpmValues = useSelector(state => state.bpmValues)
     const dispatch = useDispatch();
     const controlsRef = useRef();
     const [openScreen, setOpenScreen] = useState();
@@ -138,6 +149,7 @@ const Avr = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, 
     useEffect(() => {
         setOpenScreen(update.split(" "))
         setTestInterval(setInterval(() => {
+
             dispatch(monitorActions.setNewValues({ typeCode: chartElementId, time: newTimer }))
         }, 50000));
         return () => {
@@ -164,7 +176,6 @@ const Avr = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, 
     useEffect(() => {
         if (!openScreen?.length) return;
         let autoStartTimerId;
-
         const chartInitializationPromise = drawExample(
             openScreen,
             chartElementId,
@@ -173,7 +184,10 @@ const Avr = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, 
             strokeThickness,
             gapPoints,
             pointsLoop,
-            currentPoint
+            currentPoint,
+            bpmValues,
+            dispatch,
+            bpmState
         ).then(res => {
             sciChartSurfaceRef.current = res.sciChartSurface;
             controlsRef.current = res.controls;

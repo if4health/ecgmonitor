@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import axios, {AxiosResponse} from 'axios';
 import Avr from "./components/avr";
-import {ContainerSelect, IbRow2Col2, Label, Select} from "./styles";
+import {ContainerBpm, ContainerSelect, Label, Select} from "./styles";
 import {useDispatch, useSelector} from "react-redux";
 import {monitorActions} from "./saga/reducers";
 
@@ -10,6 +9,7 @@ export default function App() {
     const [statePosition, setStatePosition] = useState();
     const update = useSelector(state => state.monitorData);
     const selectedEcgType = useSelector(state => state.selectedEcg);
+    const bpmState = useSelector(state => state?.bpmState)
 
     useEffect(() => {
         dispatch(monitorActions.getAllData({ time: 1 }))
@@ -35,7 +35,13 @@ export default function App() {
                     timerTimeoutMs={selectedEcgType?.period * 10}
                     strokeThickness={5}
                     gapPoints={20}
-                    pointsLoop={2000}/>}
+                    pointsLoop={2000}
+                    bpmState={bpmState}
+                />}
+                <ContainerBpm>
+                    <span>{Math.round(bpmState?.bpmNumber)}</span>
+                    <div>BPM</div>
+                </ContainerBpm>
             </div>
             <ContainerSelect>
                 <Label>Selecione a variação do exame</Label>

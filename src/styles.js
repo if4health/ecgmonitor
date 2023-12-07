@@ -25,6 +25,26 @@ export const ContainerSelect = styled.div`
   top: 8px;
 `
 
+export const ContainerBpm = styled.div`
+  width: 200px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  color: green;
+  bottom: 0px;
+  flex-direction: column;
+  height: 200px;
+  border: green solid 5px;
+  span {
+    font-size: 100px;
+  }
+  
+  div {
+    font-size: 50px;
+  }
+  
+`
+
 export const Label = styled.label`
   font-size: 16px;
   margin-right: 10px;
