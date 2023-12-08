@@ -4,6 +4,9 @@ O Ecg Monitor é uma aplicação front-end desenvolvida com ReactJS, para visual
 ### Exemplo estático
 ![estatico](images/estatico_img2.png)
 
+### Exemplo dinamico
+![dinamico](images/dinamico_img1.png)
+
 ## Requisitos
 NodeJS [https://nodejs.org/en/](URL) 
 
@@ -27,6 +30,21 @@ Pronto o projeto ja vai carregar na url http://localhost:8080
 
 O projeto ja esta pronto para subir para um ambiente do Netlify, atualmente esta na URL https://ecg-monitor-if4health.netlify.app/
 
-Tabém é importante destacar que atualmente como o projeto do FASS-ECG esta em ambiente apenas http, os navegadores bloqueiam a chamada do API e com isso nÃo é possível visualizar, 
+Também é importante destacar que atualmente como o projeto do FASS-ECG esta em ambiente apenas http, os navegadores bloqueiam a chamada do API no ambiente do Netlify e com isso não é possível visualizar o exame, por isso siga o roteiro abaixo para poder visuzalizar no Google chrome:
+
+Para abrir o exame ECG, entra no link React App (ecg-monitor-if4health.netlify.app), no google chrome ao entra na tela estara branca, então clique no cadeado conforme imagem abaixo:
+![cadeado](images/cadeado_1.png)
+ 
+
+Após a o clique,  clicar em “Configurações do site”:
+
+![permi](images/permi.png)
+
+ 
+Irá abrir uma lista de Permissões, na lista procure o item “Conteúdo não seguro” e coloque a opção “permitir” Conforme abaixo:
+![lista](images/lista.png)
+ 
+
+Após isso somente entrar no site novamente e atualizar a pagina
 
 
