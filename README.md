@@ -2,7 +2,7 @@
 O Ecg Monitor é uma aplicação front-end desenvolvida com ReactJS, para visualizar exames ECG (Eletrocardiograma) que busca os dados dos exames do projeto FASS-ECG https://github.com/if4health/FASS-ECG no padrão FHIR https://www.hl7.org/fhir/. A aplicação é capaz de exibir os exames tanto na forma dinamica, quanto na forma estatica.
 
 ### Exemplo estático
-![ECG_Estatico](images/ECG_Estatico.png)
+![estatico](images/estatico_img2.png)
 
 ## Requisitos
 NodeJS [https://nodejs.org/en/](URL) 
