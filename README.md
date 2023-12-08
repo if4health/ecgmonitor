@@ -1,70 +1,32 @@
-# Getting Started with Create React App
+# Ecg Monitor
+O Ecg Monitor é uma aplicação front-end desenvolvida com ReactJS, para visualizar exames ECG (Eletrocardiograma) que busca os dados dos exames do projeto FASS-ECG https://github.com/if4health/FASS-ECG no padrão FHIR https://www.hl7.org/fhir/. A aplicação é capaz de exibir os exames tanto na forma dinamica, quanto na forma estatica.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Exemplo estático
+![ECG_Estatico](images/ECG_Estatico.png)
 
-## Available Scripts
+## Requisitos
+NodeJS [https://nodejs.org/en/](URL) 
 
-In the project directory, you can run:
+## Instalação
+Primeiramente, antes da instalação é necessário clonar o projeto, para isso no computador no terminal que você utiliza utilizar o comando:
 
-### `npm start`
+`git clone https://github.com/if4health/ecgmonitor`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Após o clone entre no projeto e novamente abra o terminal e execute o comando abaixo (pode levar alguns minutos):
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+`npm install`
 
-### `npm test`
+Após instalar o projeto basta executar o comando abaixo:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+`npm start`
 
-### `npm run build`
+Pronto o projeto ja vai carregar na url http://localhost:8080
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Observações
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+O projeto ja esta pronto para subir para um ambiente do Netlify, atualmente esta na URL https://ecg-monitor-if4health.netlify.app/
 
-### `npm run eject`
+Tabém é importante destacar que atualmente como o projeto do FASS-ECG esta em ambiente apenas http, os navegadores bloqueiam a chamada do API e com isso nÃo é possível visualizar, 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
