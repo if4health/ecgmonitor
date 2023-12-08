@@ -11,7 +11,7 @@ O Ecg Monitor é uma aplicação front-end desenvolvida com ReactJS, para visual
 NodeJS [https://nodejs.org/en/](URL) 
 
 ## Instalação
-Primeiramente, antes da instalação é necessário clonar o projeto, para isso no computador no terminal que você utiliza utilizar o comando:
+Primeiramente, antes da instalação é necessário clonar o projeto, para isso no terminal que você utiliza usar o comando:
 
 `git clone https://github.com/if4health/ecgmonitor`
 
