@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from "react";
-import Avr from "./components/avr";
+import Dynamic from "./components/dynamic";
 import {ContainerBpm, ContainerSelect, Label, Select} from "./styles";
 import {useDispatch, useSelector} from "react-redux";
 import {monitorActions} from "./saga/reducers";
+import {ButtonGroup, ButtonSelect, Page} from "./components/styles";
+import ChartECG from "./components/static";
 
 export default function App() {
     const dispatch = useDispatch()
+    const [initialValues] = useState(1500);
     const [statePosition, setStatePosition] = useState();
     const update = useSelector(state => state.monitorData);
     const selectedEcgType = useSelector(state => state.selectedEcg);
     const bpmState = useSelector(state => state?.bpmState)
+    const [showDynamic, setShowDynamic] = useState(true)
 
     useEffect(() => {
         dispatch(monitorActions.getAllData({ time: 1 }))
@@ -21,12 +25,12 @@ export default function App() {
         }
         setStatePosition('container');
     }
-
     return (
         update ?
-        <div id="container" onClick={(e) => openState(e?.target?.id)} style={{ position: "relative", height: '80vh' }}>
-            <div id="containerChart" onClick={(e) => openState(e?.target?.id)} style={{ position: 'relative', display: 'flex', flexFlow: 'wrap', justifyContent: 'flex-end', height: '80vh' }}>
-                {selectedEcgType?.data && selectedEcgType?.code && <Avr
+            <>
+                {showDynamic ? <div id="container" onClick={(e) => openState(e?.target?.id)} style={{ position: "relative", height: '80vh' }}>
+                     <div id="containerChart" onClick={(e) => openState(e?.target?.id)} style={{ position: 'relative', display: 'flex', flexFlow: 'wrap', justifyContent: 'flex-end', height: '80vh' }}>
+                {selectedEcgType?.data && selectedEcgType?.code && <Dynamic
                     update={selectedEcgType.data}
                     isSomeOneOpened={statePosition?.includes('chart')}
                     setStatePosition={setStatePosition} openState={openState}
@@ -54,7 +58,18 @@ export default function App() {
                     }
                 </Select>
             </ContainerSelect>
-        </div> : <></>
+        </div> :  <Page>
+                    <ChartECG initialValues={initialValues} dataPointsArray={selectedEcgType?.data?.split(' ')} />
+                    <ChartECG initialValues={initialValues} dataPointsArray={selectedEcgType?.data?.split(' ')} />
+                </Page> }
+                <ButtonGroup>
+                    <ButtonSelect onClick={() => setShowDynamic(true)}>Exame dinâmico</ButtonSelect>
+                    <ButtonSelect onClick={() => setShowDynamic(false)}>Exame estático</ButtonSelect>
+                </ButtonGroup>
+            </>
+
+            :
+        <></>
 
 
     );

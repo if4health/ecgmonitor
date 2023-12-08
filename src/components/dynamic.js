@@ -120,7 +120,7 @@ const drawExample = async (
 
 
 
-const Avr = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, pointsLoop, currentPoint, openState, setStatePosition, isSomeOneOpened, update, bpmState} ) => {
+const Dynamic = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, pointsLoop, currentPoint, openState, setStatePosition, isSomeOneOpened, update, bpmState} ) => {
     const sciChartSurfaceRef = useRef();
     const [contextControls, setContextControls] = useState()
     const newValues = useSelector(state => state.newValues)
@@ -230,4 +230,4 @@ const Avr = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, 
     );
 }
 
-export default Avr;
+export default Dynamic;
