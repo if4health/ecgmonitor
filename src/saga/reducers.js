@@ -8,7 +8,8 @@ const initialState = {
     bpmState: {
         bpmNumber: 0,
         positionBpm: 0
-    }
+    },
+    visibleRange: { lowerLimit: 0, upperLimit: 0 }
 };
 
 const monitorSlice = createSlice({
@@ -43,6 +44,9 @@ const monitorSlice = createSlice({
                     positionBpm: payload?.positionBpm,
                 }
             }},
+        setVisibleRange: (state, action) => {
+            state.visibleRange = action.payload
+        },
         updateBpm: (state) => state,
         resetNewValues: (state) => ({
            ...state,

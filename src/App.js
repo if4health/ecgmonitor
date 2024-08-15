@@ -12,8 +12,9 @@ export default function App() {
     const [statePosition, setStatePosition] = useState();
     const update = useSelector(state => state.monitorData);
     const selectedEcgType = useSelector(state => state.selectedEcg);
-    const bpmState = useSelector(state => state?.bpmState)
-    const [showDynamic, setShowDynamic] = useState(true)
+    const bpmState = useSelector(state => state?.bpmState);
+    const visibleRange = useSelector(state => state.visibleRange);;
+    const [showDynamic, setShowDynamic] = useState(true);
 
     useEffect(() => {
         dispatch(monitorActions.getAllData({ time: 1 }))
@@ -41,6 +42,7 @@ export default function App() {
                     gapPoints={20}
                     pointsLoop={2000}
                     bpmState={bpmState}
+                    yVisibleRange={visibleRange}
                 />}
                 <ContainerBpm>
                     <span>{Math.round(bpmState?.bpmNumber)}</span>

@@ -24,3 +24,5 @@ yarn-error.log*
  .babelrc
 .idea/
 package-lock.json
+
+/.cert
