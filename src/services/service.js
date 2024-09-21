@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 const ApiClient = axios.create({
-    // baseURL: "http://cloudecg-env.eba-mau7x2gw.us-east-1.elasticbeanstalk.com/baseR4/"
-    baseURL: "http://127.0.0.1:3000/baseR4/"
+    baseURL: "https://biosignalinfhir.if4health.com.br/baseR4/"
+    // baseURL: "http://127.0.0.1:3000/baseR4/"
 })
 
 export const getResultById = async (time) => {
-    return await ApiClient.get(`Observation/66105237c24abe3ae716dc2c/data/${time}`).then(res => res);
+    return await ApiClient.get(`Observation/667df79fa6d086501f304a9c/data/${time}`).then(res => res);
 }
 
 export const getResultByIdAndIntervalMinutes = async (time) => {
-    return await ApiClient.get(`Observation/66105237c24abe3ae716dc2c/data/${time}/${time + 1}`).then(res => res);
+    return await ApiClient.get(`Observation/667df79fa6d086501f304a9c/data/${time}/${time + 1}`).then(res => res);
 }
 
 // export const getResultById = async (time) => {
@@ -35,14 +35,17 @@ export const getResultByIdAndIntervalMinutes = async (time) => {
 // }
 
 const getBPMByResult = async (params) => {
-    return await axios.post("http://127.0.0.1:8000/run_script/direct/params", {
+
+    return await axios.post("https://ifcloud.if4health.com.br/run_script/direct/params", {
+    // return await axios.post("http://127.0.0.1:8000/run_script/direct/params", {
         "scriptName": "calcBPM.py",
         "params": params
     }).then(res => res);
 }
 
 const getRPEAKSByResult = async (params) => {
-    return await axios.post("http://127.0.0.1:8000/run_script/direct/params", {
+    return await axios.post("https://ifcloud.if4health.com.br/run_script/direct/params", {
+    // return await axios.post("http://127.0.0.1:8000/run_script/direct/params", {
         "scriptName": "calcRPEAKS.py",
         "params": params
     }).then(res => res);
