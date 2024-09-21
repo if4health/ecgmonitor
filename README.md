@@ -25,31 +25,3 @@ Após instalar o projeto basta executar o comando abaixo:
 
 Pronto o projeto ja vai carregar na url http://localhost:8080
 
-
-## Observações
-
-### Ambiente
-
-O projeto ja esta pronto para subir para um ambiente do Netlify, atualmente esta na URL https://ecg-monitor-if4health.netlify.app/
-
-### Pendência
-Atualmente no arquivo services, tem um alguns dados mocados pois ainda não esta completamente pronta a solução que ira exibir os BPMs no projeto IFCloud https://github.com/if4health/ifcloud
-
-### Ajustes necessários
-Também é importante destacar que atualmente como o projeto do FASS-ECG esta em ambiente apenas http, os navegadores bloqueiam a chamada do API no ambiente do Netlify e com isso não é possível visualizar o exame, por isso siga o roteiro abaixo para poder visuzalizar no Google chrome:
-
-Para abrir o exame ECG, entra no link React App (ecg-monitor-if4health.netlify.app), no google chrome ao entra na tela estara branca, então clique no cadeado conforme imagem abaixo:
-![cadeado](images/cadeado_1.png)
- 
-
-Após a o clique,  clicar em “Configurações do site”:
-
-![lista](images/lista.png)
- 
-Irá abrir uma lista de Permissões, na lista procure o item “Conteúdo não seguro” e coloque a opção “permitir” Conforme abaixo:
- 
-![permi](images/permi.png)
-
-Após isso somente entrar no site novamente e atualizar a pagina
-
-
