@@ -67,8 +67,8 @@ const ChartECG = ({ initialValues, dataPointsArray }) => {
         theme: 'light2',
         backgroundColor: 'transparent',
         axisY: {
-            maximum: 500,
-            minimum: -100,
+            maximum: 1500,
+            minimum: 0,
             gridColor: color,
             gridThickness: 0,
             interval: 19,

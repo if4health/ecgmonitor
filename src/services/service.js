@@ -1,51 +1,86 @@
 import axios from 'axios';
 
 const ApiClient = axios.create({
-    baseURL: "http://cloudecg-env.eba-mau7x2gw.us-east-1.elasticbeanstalk.com/baseR4/"
+    baseURL: "https://biosignalinfhir.if4health.com.br/baseR4/"
+    // baseURL: "http://127.0.0.1:3000/baseR4/"
 })
 
 export const getResultById = async (time) => {
-    return await ApiClient.get(`Observation/65713130569e2d085435994f/data/${time}`).then(res => res);
+    return await ApiClient.get(`Observation/667df79fa6d086501f304a9c/data/${time}`).then(res => res);
 }
 
-export const getBpm = () => {
+export const getResultByIdAndIntervalMinutes = async (time) => {
+    return await ApiClient.get(`Observation/667df79fa6d086501f304a9c/data/${time}/${time + 1}`).then(res => res);
+}
+
+// export const getResultById = async (time) => {
+//     return new Promise((resolve) => {
+//         setTimeout(async () => {
+//             try {
+//                 const response = await ApiClient.get(`Observation/66105237c24abe3ae716dc2c/data/${time}`);
+
+//                 const bpm = await axios.post("http://127.0.0.1:8000/run_script/direct/params", {
+//                     "scriptName": "calcBPM.py",
+//                     "params": response.data[0].data
+//                 });
+
+//                 console.log(bpm.data);
+
+//                 resolve(response);
+//             } catch (error) {
+//                 resolve({ error: true, message: 'Erro na requisição' });
+//             }
+//         }, 5000); // Simula um atraso de 5 segundos
+//     });
+// }
+
+const getBPMByResult = async (params) => {
+
+    return await axios.post("https://ifcloud.if4health.com.br/run_script/direct/params", {
+    // return await axios.post("http://127.0.0.1:8000/run_script/direct/params", {
+        "scriptName": "calcBPM.py",
+        "params": params
+    }).then(res => res);
+}
+
+const getRPEAKSByResult = async (params) => {
+    return await axios.post("https://ifcloud.if4health.com.br/run_script/direct/params", {
+    // return await axios.post("http://127.0.0.1:8000/run_script/direct/params", {
+        "scriptName": "calcRPEAKS.py",
+        "params": params
+    }).then(res => res);
+}
+
+// export const getBpm = (params) => {
+//     return {
+//         rpeak: getRPEAKSByResult(params).data.split(' ').map(Number),
+//         bpm: getBPMByResult(params).data.split(' ').map(Number)
+//     }
+// }
+
+
+export const getBpm = async (params) => {
+    const rpeakResponse = await getRPEAKSByResult(params);
+    const bpmResponse = await getBPMByResult(params);
+
+    const rpeaks = rpeakResponse.data.split(' ').map(Number);
+    const bpms = bpmResponse.data.split(' ').map(Number);
+
+    const lastRpeak = rpeaks[-1];
+    const lastBpm = bpms[-1];
+
     return {
-        rpeak: [  184, 446, 715, 991, 1266, 1552, 1847, 2135, 2402, 2669, 2942, 3218,
-            3500, 3885, 4185, 4468, 4759, 5056, 5341, 5610, 5882, 6185, 6491, 6771,
-            7053, 7318, 7589, 7855, 8114, 8373, 8632, 8879, 9132, 9388, 9643, 9908,
-            10192, 10461, 10729, 10880, 11141, 11411, 11676, 11934, 12185, 12452, 12732, 13018,
-            13290, 13568, 13841, 14116, 14388, 14583, 14871, 15143, 15410, 15684, 15957, 16233,
-            16518, 16797, 17067, 17341, 17610, 17865, 18186, 18478, 18758, 19033, 19306, 19588,
-            19873, 20158, 20458, 20760, 21041, 21311, 21593, 21738, 22027, 22295, 22572, 22861,
-            23158, 23439, 23709, 23966, 24226, 24478, 24737, 25005, 25328, 25615, 25899, 26175,
-            26479, 26778, 27060, 27345, 27623, 27902, 28184, 28470, 28760, 29062, 29350, 29641,
-            29931, 30217, 30499, 30773, 31062, 31354, 31652, 31947, 32238, 32657, 32950, 33221,
-            33494, 33770, 34056, 34353, 34644, 34933, 35239, 35523, 35794],
-        bpm: [ 81.75052146, 80.35617154, 79.05670984, 77.46529016, 75.78464272,
-            74.60249353, 76.39446225, 78.95469158, 80.32870268, 79.44912078,
-            78.0143418,   70.33986528, 68.25232425, 68.1620802,  74.20474148,
-            74.44723362, 74.2686454,  76.29274336, 78.52153142, 77.02032942,
-            73.78303549, 73.02652114, 74.79655541, 78.43797456, 79.29219371,
-            80.82837812, 81.45797089, 82.68927777, 83.42104129, 84.77198933,
-            85.4314442,  85.75730764, 84.84254805, 83.55350042, 80.77983647,
-            79.30993003,  79.00570517, 101.34196585, 102.16260327, 101.96354256,
-            81.44548962,  81.76634931,  83.78550697,  83.58193078,  81.38862563,
-            77.87720864,  77.38136591,  77.56641258,  78.76554954,  78.47669861,
-            79.04816628,  89.6005715,   88.41842232,  88.41842232,  78.45884885,
-            79.73657887,  79.63958986,  78.76000796,  77.74550953,  77.17817592,
-            77.75804843,  78.77254686,  79.73216319,  81.30122998,  77.45268667,
-            75.34383118,  72.8221167,   76.57507916,  78.29165193,  78.10923003,
-            77.19031245,  76.07953295,  74.547189,    73.12469241,  73.48441104,
-            76.15182458,  77.84315344, 101.88228101, 100.12861813, 101.46274843,
-            77.79372848,  77.79372848,  75.16974636,  74.79963875,  76.55330163,
-            80.32749837,  82.39760989,  84.30290528,  84.08650829,  83.25964071,
-            76.97747481,  74.26459541,  72.75061253,  76.54761054,  75.14432013,
-            73.8721188,   73.31692172,  74.89631131,  76.7158338,   76.99044741,
-            77.25927968,  76.53462138,  75.55548181,  73.86415295,  73.68927881,
-            73.60393675,  74.59073966,  74.76561379,  75.55548181,  77.00567392,
-            76.74427036,  75.86964482,  73.75275365,  73.24589658,  73.33065411,
-            66.35139698,  66.51804282,  68.34455188,  77.53698125,  79.05098285,
-            77.65715207,  75.52535304,  74.18028794,  73.91888438,  73.2056722,
-            73.81568764,  75.47092198,  78.51062702]
+        rpeak: rpeaks,
+        bpm: bpms
     }
 }
+
+// req.data[0].data
+
+// export const getBpm = async () => {
+//     return {
+//         rpeak: [184, 591, 867, 1142, 1428, 1723, 2011, 2278, 2546, 2819, 3095],
+//         bpm: [61.4677919, 69.95919239, 77.44359988, 75.76342302, 74.58160484, 76.3730718, 78.83196378, 80.20559015, 79.32625454, 78.54753942]
+//     };
+// }
+

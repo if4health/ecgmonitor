@@ -15,6 +15,8 @@ import {getValuesFromData} from "../utils";
 import {useDispatch, useSelector} from "react-redux";
 import {monitorActions} from "../saga/reducers";
 
+SciChartSurface.UseCommunityLicense();
+
 const drawExample = async (
     ecgHeartRateValues,
     chartElementId,
@@ -26,7 +28,8 @@ const drawExample = async (
     currentPoint,
     bpmValues,
     dispatch,
-    bpmState
+    bpmState,
+    yVisibleRange
 ) => {
     const { sciChartSurface, wasmContext } = await SciChartSurface.create(chartElementId);
     const xAxis = new CategoryAxis(wasmContext, {
@@ -35,18 +38,16 @@ const drawExample = async (
         labelFormat: ENumericFormat.NoFormat,
         autoTicks: false,
         minorDelta: 10,
-        majorDelta:50
+        majorDelta: 50
     });
     sciChartSurface.xAxes.add(xAxis);
 
-    // Create multiple y-axis, one per trace. Using the stacked vertically layout strategy
     const yAxisHeartRate = new NumericAxis(wasmContext, {
         id: `yHeartRate-${chartElementId}`,
-        visibleRange: new NumberRange(-600, 600),
+        visibleRange: new NumberRange(yVisibleRange.lowerLimit - 200, yVisibleRange.upperLimit + 200),
         isVisible: false
-    });
+    }); 
 
-    // sciChartSurface.layoutManager!.rightOuterAxesLayoutStrategy = new RightAlignedOuterVerticallyStackedAxisLayoutStrategy();
     sciChartSurface.yAxes.add(yAxisHeartRate);
 
     const fifoSweepingGap = gapPoints;
@@ -117,10 +118,7 @@ const drawExample = async (
     return { sciChartSurface, wasmContext, controls: { handleStart, handleStop }, dataSeries1 };
 };
 
-
-
-
-const Dynamic = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, pointsLoop, currentPoint, openState, setStatePosition, isSomeOneOpened, update, bpmState} ) => {
+const Dynamic = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoints, pointsLoop, currentPoint, openState, setStatePosition, isSomeOneOpened, update, bpmState, yVisibleRange} ) => {
     const sciChartSurfaceRef = useRef();
     const [contextControls, setContextControls] = useState()
     const newValues = useSelector(state => state.newValues)
@@ -149,15 +147,14 @@ const Dynamic = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoin
     useEffect(() => {
         setOpenScreen(update.split(" "))
         setTestInterval(setInterval(() => {
-
             dispatch(monitorActions.setNewValues({ typeCode: chartElementId, time: newTimer }))
         }, 50000));
         return () => {
             dispatch(monitorActions.resetNewValues())
             clearInterval(testInterval);
         }
-
     }, [chartElementId]);
+
     useEffect(() => {
         if(!reset) return;
         dispatch(monitorActions.resetNewValues())
@@ -187,7 +184,8 @@ const Dynamic = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoin
             currentPoint,
             bpmValues,
             dispatch,
-            bpmState
+            bpmState,
+            yVisibleRange // Passe o yVisibleRange aqui
         ).then(res => {
             sciChartSurfaceRef.current = res.sciChartSurface;
             controlsRef.current = res.controls;
@@ -226,7 +224,7 @@ const Dynamic = ({chartElementId, step, timerTimeoutMs, strokeThickness, gapPoin
                 }>Resetar Monitor</Button>
             </>
 
-               : <></>
+            : <></>
     );
 }
 
